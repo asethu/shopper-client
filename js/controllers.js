@@ -9,7 +9,7 @@ app.controller('CarouselController', function($scope) {
 	];
 });
 
-app.controller('ApplicantController', function($scope, $uibModal, APIService, SessionService) {
+app.controller('ApplicantController', function($scope, $uibModal, APIService) {
 	$scope.applyNow = function () {
 		var modalInstance = $uibModal.open({
 			animation: true,
