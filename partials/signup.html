@@ -1,37 +1,57 @@
 <div class="modal-header">
-    <h3 class="modal-title">Shopper Application</h3>
+    <h3 class="modal-title">New Shopper Application</h3>
 </div>
 
-<div class="modal-body">
-	<form name="application">
+<form name="signupForm" novalidate>
+	<div class="modal-body">
 		<div class="form-group">
 			<label for="firstName" class="control-label">First Name</label>
-			<input type="text" id="firstName" placeholder="First Name" class="form-control" ng-model="applicant.firstName">
+			<span ng-show="signupForm.$submitted || signupForm.firstName.$touched">
+		     	<span class="alert-danger" ng-show="signupForm.firstName.$error.required">Required Field</span>
+			</span>
+			<input type="text" name="firstName" id="firstName" placeholder="First Name" class="form-control" ng-model="applicant.firstName" required>
 		</div>
 
 		<div class="form-group">
 			<label for="lastName">Last Name</label>
-			<input type="text" id="lastName" placeholder="Last Name" class="form-control" ng-model="applicant.lastName">
+			<span ng-show="signupForm.$submitted || signupForm.lastName.$touched">
+		     	<span class="alert-danger" ng-show="signupForm.lastName.$error.required">Required Field</span>
+			</span>
+			<input type="text" name="lastName" id="lastName" placeholder="Last Name" class="form-control" ng-model="applicant.lastName" required>
 		</div>
 
 		<div class="form-group">
 			<label for="region">City</label>
-			<input type="region" id="region" placeholder="San Jose" class="form-control" ng-model="applicant.region">
+			<span ng-show="signupForm.$submitted || signupForm.region.$touched">
+		     	<span class="alert-danger" ng-show="signupForm.region.$error.required">Required Field</span>
+			</span>
+			<input type="region" name="region" id="region" placeholder="San Jose" class="form-control" ng-model="applicant.region" required>
 		</div>
 
 		<div class="form-group">
 			<label for="email">Email Address</label>
-			<input type="email" id="email" placeholder="alias@domain.com" class="form-control" ng-model="applicant.email">
+			<span ng-show="signupForm.$submitted || signupForm.email.$touched">
+		     	<span class="alert-danger" ng-show="signupForm.email.$error.required">Required Field</span>
+		     	<span class="alert-danger" ng-show="signupForm.email.$invalid">Invalid Email</span>
+			</span>
+			<input type="email" name="email" id="email" placeholder="alias@domain.com" class="form-control" ng-model="applicant.email" required>
 		</div>
 
-		<div class="form-group">
+		<div class="form-group" ng-controller="PhoneValidationController">
 			<label for="phone">Phone</label>
-			<input type="text" id="phone" placeholder="(XXX) XXX XXXX" class="form-control" ng-model="applicant.phone">
+			<span ng-show="signupForm.$submitted || signupForm.phone.$touched">
+		     	<span class="alert-danger" ng-show="signupForm.phone.$error.required">Required Field</span>
+		     	<span class="alert-danger" ng-show="signupForm.phone.$invalid">Invalid Phone</span>
+			</span>
+			<input type="text" name="phone" id="phone" placeholder="(XXX) XXX XXXX" class="form-control" ng-model="applicant.phone" ng-required="requiredPhone" ng-pattern="phoneNumberPattern" required>
 		</div>
 
 		<div class="form-group">
 			<label for="phoneType">Phone Type</label>
-			<select id="phoneType" class="form-control" ng-model="applicant.phoneType">
+			<span ng-show="signupForm.$submitted || signupForm.phoneType.$touched">
+		     	<span class="alert-danger" ng-show="signupForm.phoneType.$error.required">Required Field</span>
+			</span>
+			<select name="phoneType" id="phoneType" class="form-control" ng-model="applicant.phoneType" required>
 				<option>Android Phone</option>
 				<option>Apple iOS Phone</option>
 				<option>Windows Phone</option>
@@ -44,14 +64,15 @@
 				<input type="checkbox" ng-model="applicant.isOver21">Older than 21 years
 			</label>
   		</div>
-  	</form>
 
-	<span class="alert-success text-center" role="alert" ng-show="showMessage && callSuccess">Successfully registered.</span>
-	<span class="alert-danger text-center" role="alert" ng-show="showMessage && !callSuccess">{{failureMessage}}</span>
+  		<!-- Success and error messages -->
+		<span class="alert-success text-center" role="alert" ng-show="showMessage && callSuccess">Successfully registered.</span>
+		<span class="alert-danger text-center" role="alert" ng-show="showMessage && !callSuccess">{{failureMessage}}</span>
 
-</div>
+	</div>
 
-<div class="modal-footer">
-	<button class="btn btn-primary" type="button" ng-click="createApplicant()">Submit</button>
-	<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
-</div>
+	<div class="modal-footer">
+		<button class="btn btn-primary" type="button" ng-disabled="!signupForm.$valid" ng-click="createApplicant()">Submit</button>
+		<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+	</div>
+</form>

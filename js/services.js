@@ -15,7 +15,7 @@ app.factory('SessionService', function() {
 app.factory('APIService', function($http) {
 	var restService = {};
 
-	restService.createApplicant = function(firstName, lastName, city, email, phone, phoneType, isOver21) {
+	restService.createApplicant = function(firstName, lastName, city, email, phone, phoneType, over21) {
 		return $http({
 			method: "POST",
 			url: 'http://localhost:9090/applicants',
@@ -29,7 +29,7 @@ app.factory('APIService', function($http) {
 				'email': email,
 				'phone': phone,
 				'phoneType': phoneType,
-				'over21': isOver21
+				'over21': over21
 			}
 		});
 	};
@@ -41,7 +41,7 @@ app.factory('APIService', function($http) {
 		});
 	};
 
-	restService.updateApplicant = function(email, firstName, lastName, city, phone, phoneType, isOver21) {
+	restService.updateApplicant = function(email, firstName, lastName, city, phone, phoneType, over21) {
 		return $http({
 			method: "PATCH",
 			url: 'http://localhost:9090/applicants/' + email,
@@ -54,7 +54,7 @@ app.factory('APIService', function($http) {
 				'region': city,
 				'phone': phone,
 				'phoneType': phoneType,
-				'over21': isOver21
+				'over21': over21
 			}
 		});
 	};

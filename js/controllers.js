@@ -38,7 +38,7 @@ app.controller('SignupModalInstanceController', function($scope, $timeout, $uibM
 	$scope.createApplicant = function() {
 		APIService.createApplicant(
 			$scope.applicant.firstName, $scope.applicant.lastName, $scope.applicant.region,
-			$scope.applicant.email, $scope.applicant.phone, $scope.applicant.phoneType, $scope.applicant.isOver21
+			$scope.applicant.email, $scope.applicant.phone, $scope.applicant.phoneType, $scope.applicant.over21
 		).success(function(data, status, headers, config) {
 			$scope.showMessage = true;
 			$scope.callSuccess = true;
@@ -94,7 +94,7 @@ app.controller('SearchModalInstanceController', function($scope, $timeout, $uibM
 	$scope.updateApplicant = function() {
 		APIService.updateApplicant(
 			$scope.email, $scope.applicant.firstName, $scope.applicant.lastName,
-			$scope.applicant.region, $scope.applicant.phone, $scope.applicant.phoneType, $scope.applicant.isOver21
+			$scope.applicant.region, $scope.applicant.phone, $scope.applicant.phoneType, $scope.applicant.over21
 		).success(function(data, status, headers, config) {
 			$scope.showMessage = true;
 			$scope.updateSuccess = true;
@@ -113,4 +113,20 @@ app.controller('SearchModalInstanceController', function($scope, $timeout, $uibM
 	$scope.cancel = function() {
 		$uibModalInstance.dismiss('cancel');
 	}
+});
+
+// Took the phone validation code from here,
+// http://stackoverflow.com/questions/18900308/angularjs-dynamic-ng-pattern-validation
+app.controller('PhoneValidationController', function($scope) {
+	$scope.phoneNumberPattern = (function() {
+		var regexp = /^\(?(\d{3})\)?[ .-]?(\d{3})[ .-]?(\d{4})$/;
+		return {
+			test: function(value) {
+				if( $scope.requiredPhone === false ) {
+					return true;
+				}
+				return regexp.test(value);
+			}
+		};
+	})();
 });
