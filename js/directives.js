@@ -7,6 +7,12 @@ app.directive('shopperHeader', function () {
 	}
 });
 
+app.directive('shopperCarousel', function () {
+	return {
+		restrict: 'AE',
+		templateUrl: 'partials/carousel.html'
+	}
+});
 app.directive('shopperBenefits', function () {
 	return {
 		restrict: 'AE',

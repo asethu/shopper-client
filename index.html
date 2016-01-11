@@ -17,27 +17,8 @@
   </head>
   <body>
     <div ng-controller="ApplicantController">
-
       <div shopper-header></div>
-
-      <div ng-controller="CarouselController">
-          <uib-carousel interval="interval">
-            <uib-slide ng-repeat="slide in slides" active="slide.active">
-              <img ng-src="{{slide.image}}" style="margin:auto;">
-              <div class="carousel-caption">
-                <h2>Step {{slide.id}}: {{slide.action}}</h2>
-              </div>
-            </uib-slide>
-          </uib-carousel>
-      </div>
-
-      <div class="well well-sm text-center">
-        <h4>Want to become a shopper ?</h4>
-        <button type="button" class="btn btn-success btn-lg" ng-click="applyNow()">
-          Apply Now
-        </button>
-      </div>
-
+      <div shopper-carousel></div>
       <div shopper-benefits></div>
     </div>
   </body>
