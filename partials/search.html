@@ -1,9 +1,21 @@
 <div class="modal-header">
-    <h3 class="modal-title">Shopper Application</h3>
+    <h3 class="modal-title">Check Application Status</h3>
 </div>
 
 <div class="modal-body">
 	<form name="application">
+		<div class="form-group">
+			<label for="email" class="control-label">Applicant Email</label>
+			<input type="text" id="email" name="email" placeholder="Email" class="form-control" ng-model="email" ng-readonly="searchSuccess">
+		</div>
+	</form>
+
+	<div ng-show="searchSuccess">
+		<div class="form-group">
+			<label for="status" class="control-label">Application Status</label>
+			<input type="text" id="status" name="status" class="form-control" ng-model="applicant.status" ng-readonly="searchSuccess">
+		</div>
+
 		<div class="form-group">
 			<label for="firstName" class="control-label">First Name</label>
 			<input type="text" id="firstName" placeholder="First Name" class="form-control" ng-model="applicant.firstName">
@@ -17,11 +29,6 @@
 		<div class="form-group">
 			<label for="region">City</label>
 			<input type="region" id="region" placeholder="San Jose" class="form-control" ng-model="applicant.region">
-		</div>
-
-		<div class="form-group">
-			<label for="email">Email Address</label>
-			<input type="email" id="email" placeholder="alias@domain.com" class="form-control" ng-model="applicant.email">
 		</div>
 
 		<div class="form-group">
@@ -44,14 +51,14 @@
 				<input type="checkbox" ng-model="applicant.isOver21">Older than 21 years
 			</label>
   		</div>
-  	</form>
+	</div>
 
-	<span class="alert-success text-center" role="alert" ng-show="showMessage && callSuccess">Successfully registered.</span>
-	<span class="alert-danger text-center" role="alert" ng-show="showMessage && !callSuccess">{{failureMessage}}</span>
-
+	<span class="alert-success text-center" role="alert" ng-show="showMessage && updateSuccess">Successfully updated.</span>
+	<span class="alert-danger text-center" role="alert" ng-show="showMessage && (!searchSuccess || !updateSuccess)">{{failureMessage}}</span>
 </div>
 
 <div class="modal-footer">
-	<button class="btn btn-primary" type="button" ng-click="createApplicant()">Submit</button>
+	<button class="btn btn-primary" type="button" ng-click="searchApplicant()" ng-show="!searchSuccess">Continue</button>
+	<button class="btn btn-primary" type="button" ng-click="updateApplicant()" ng-show="searchSuccess">Update</button>
 	<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
 </div>

@@ -12,23 +12,34 @@ app.controller('CarouselController', function($scope) {
 app.controller('ApplicantController', function($scope, $uibModal, APIService, SessionService) {
 	$scope.applyNow = function () {
 		var modalInstance = $uibModal.open({
-	    	animation: true,
-	      	templateUrl: 'partials/signup.html',
-	      	controller: 'SignupModalInstanceController'
+			animation: true,
+			backdrop: 'static',
+			templateUrl: 'partials/signup.html',
+			controller: 'SignupModalInstanceController'
+		});
+	};
+
+	$scope.searchApplicant = function () {
+		var modalInstance = $uibModal.open({
+			animation: true,
+			backdrop: 'static',
+			templateUrl: 'partials/search.html',
+			controller: 'SearchModalInstanceController'
 		});
 	};
 });
 
 app.controller('SignupModalInstanceController', function($scope, $timeout, $uibModalInstance, APIService) {
+	$scope.applicant = {};
+
 	$scope.showMessage = false;
-	$scope.callSuccess = true;
+	$scope.callSuccess = false;
 
 	$scope.createApplicant = function() {
 		APIService.createApplicant(
-			$scope.firstName, $scope.lastName, $scope.region,
-			$scope.email, $scope.phone, $scope.phoneType, $scope.isOver21
-		)
-		.success(function(data, status, headers, config) {
+			$scope.applicant.firstName, $scope.applicant.lastName, $scope.applicant.region,
+			$scope.applicant.email, $scope.applicant.phone, $scope.applicant.phoneType, $scope.applicant.isOver21
+		).success(function(data, status, headers, config) {
 			$scope.showMessage = true;
 			$scope.callSuccess = true;
 
@@ -44,6 +55,58 @@ app.controller('SignupModalInstanceController', function($scope, $timeout, $uibM
 			} else {
 				$scope.failureMessage = 'Request failed. Please try again.'
 			}
+		});
+	};
+
+	$scope.cancel = function() {
+		$uibModalInstance.dismiss('cancel');
+	}
+});
+
+app.controller('SearchModalInstanceController', function($scope, $timeout, $uibModalInstance, APIService) {
+	$scope.applicant = {};
+
+	$scope.email = null;
+
+	$scope.showMessage = false;
+	$scope.searchSuccess = false;
+	$scope.updateSuccess = false;
+
+	$scope.searchApplicant = function() {
+		APIService.getApplicant(
+			$scope.email
+		).success(function(data, status, headers, config) {
+			$scope.applicant = data;
+
+			$scope.searchSuccess = true;
+		}).error(function(data, status) {
+			$scope.showMessage = true;
+			$scope.searchSuccess = false;
+
+			if (status === 404) {
+				$scope.failureMessage = 'Application with this email not found.'
+			} else {
+				$scope.failureMessage = 'Request failed. Please try again.'
+			}
+		});
+	};
+
+	$scope.updateApplicant = function() {
+		APIService.updateApplicant(
+			$scope.email, $scope.applicant.firstName, $scope.applicant.lastName,
+			$scope.applicant.region, $scope.applicant.phone, $scope.applicant.phoneType, $scope.applicant.isOver21
+		).success(function(data, status, headers, config) {
+			$scope.showMessage = true;
+			$scope.updateSuccess = true;
+
+			$timeout(function() {
+				$uibModalInstance.close();
+			}, 2000);
+		}).error(function(data, status) {
+			$scope.showMessage = true;
+			$scope.updateSuccess = false;
+
+			$scope.failureMessage = 'Request failed. Please try again.'
 		});
 	};
 

@@ -34,5 +34,30 @@ app.factory('APIService', function($http) {
 		});
 	};
 
+	restService.getApplicant = function(email) {
+		return $http({
+			method: "GET",
+			url: 'http://localhost:9090/applicants/' + email
+		});
+	};
+
+	restService.updateApplicant = function(email, firstName, lastName, city, phone, phoneType, isOver21) {
+		return $http({
+			method: "PATCH",
+			url: 'http://localhost:9090/applicants/' + email,
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			data: {
+				'firstName': firstName,
+				'lastName': lastName,
+				'region': city,
+				'phone': phone,
+				'phoneType': phoneType,
+				'over21': isOver21
+			}
+		});
+	};
+
 	return restService;
 });
