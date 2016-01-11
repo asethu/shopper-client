@@ -1,0 +1,44 @@
+<!doctype html>
+<html ng-app="ShopperApp">
+  <head>
+    <title>Instacart Shopper</title>
+
+    <link href="https://d2guulkeunn7d8.cloudfront.net/assets/favicon-b5951bd015b361402c9c6058c302b6bb.ico" type="image/png" rel="icon"/>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-animate.js"></script>
+    <script src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-1.0.0.js"></script>
+
+    <script src="js/app.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/directives.js"></script>
+    <script src="js/services.js"></script>
+  </head>
+  <body>
+    <div ng-controller="ApplicantController">
+
+      <div shopper-header></div>
+
+      <div ng-controller="CarouselController">
+          <uib-carousel interval="interval">
+            <uib-slide ng-repeat="slide in slides" active="slide.active">
+              <img ng-src="{{slide.image}}" style="margin:auto;">
+              <div class="carousel-caption">
+                <h2>Step {{slide.id}}: {{slide.action}}</h2>
+              </div>
+            </uib-slide>
+          </uib-carousel>
+      </div>
+
+      <div class="well well-sm text-center">
+        <h4>Want to become a shopper ?</h4>
+        <button type="button" class="btn btn-success btn-lg" ng-click="applyNow()">
+          Apply Now
+        </button>
+      </div>
+
+      <div shopper-benefits></div>
+    </div>
+  </body>
+</html>
